@@ -17,6 +17,8 @@ The opportunity to dabble in change represents growth. Even when this potential 
 
 ### 3.2 Code as craft, not an extension of ego
 Some say programming is a type of art. It is not binary, there are no absolute right or wrongs. It can be a vehicle for the expression of an individual for whom their product is transitively, a part of themselves. 
-This brings attachment to the code which can lead to the original writter to adopt a certain protectionism towards it which will be damaging. The creator will avoid exploring alternatives that would imply a defect in the original creation. His collaborators, on the other hand, 
+This brings attachment to the code which can lead to the original writter to adopt a certain protectionism towards it which will be damaging. The creator will avoid exploring alternatives that would imply a defect in the original creation. His collaborators, on the other hand, will try avoid clashing with the creator and destroying his creation which is negative for both sides.
+
+It boils down to the personality of the developer, and more common across the ones that are really passionate about their craft. But in the end, it is a negative trait with negative consequences that one should strive to remove from his repertoire.
 
 # 4. W.R.T performance
