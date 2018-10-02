@@ -53,8 +53,9 @@ Do not hardcode unit tests (static) objects in the class and reuse them everywhe
             null,
             null
     )
-    private val episodeOrderTask1 = OrderTask(
-            episodeOrder1.id,
+
+    private val OrderTask1 = OrderTask(
+            Order1.id,
             "type",
             DateTime.now(),
             DateTime.now(),
@@ -78,6 +79,25 @@ If test are using a database and are independent (they should), please reinstant
             "root",
             "mirriad"
     )
+
+### 5.4 Do not compare complex objects based on their x.toString()
+If you change object implementation or replace one of the classes being used in the DB/responses (as it should) this will start failing due to different field/class names. Better to just do a lot of copy-paste and enumerate all the fields and compare them manually (learn multi-line editing in your favourite editor).
+
+        val expected = Order(
+                1,
+                "Wonderful adventures of nobody",
+                "some type",
+                10,
+                DateTime.now(),
+                "some status",
+                null,
+                null,
+                null
+        )
+
+        ...
+
+        assertEquals(expected.toString(), repository.findById(id).toString())
 
 # 6. W.R.T kotlin specific advice
 
