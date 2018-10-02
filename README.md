@@ -69,6 +69,15 @@ Do not hardcode unit tests (static) objects in the class and reuse them everywhe
 ### 5.2 Avoid chaos - avoid randomness
 If you are creating unit tests, AVOID using UUID.randomUUID()! Unit tests should be as reproducible as possible for obvious reasons. In this case, if we really don't care about the value of that UUID in particular, the best choice is to generate a UUID ahead of time (https://www.uuidgenerator.net/version4 or REPL)
 
+### 5.3 Makes sure tests use different database instances
+If test are using a database and are independent (they should), please reinstantiate/clean the DB between tests. Many of the issues that might happen due to unexpected state of the database between test executions can be attributed to a shared database instance, most of the time attributes to the lazyness of having to re-instantiate it. It is, however, always worth the extra effort to do so.
+
+    protected val db = Database.connect(
+            "jdbc:h2:mem:test${UUID.randomUUID()};DB_CLOSE_DELAY=-1;MODE=MYSQL;",
+            "org.h2.Driver",
+            "root",
+            "mirriad"
+    )
 
 # 6. W.R.T kotlin specific advice
 
