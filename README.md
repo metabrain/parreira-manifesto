@@ -32,3 +32,62 @@ It boils down to the personality of the developer, and more common across the on
 
 > TODO are we designing for a system which will handle the load in 1-2 years 
 > TODO is expected performance of platform important enough to pre-optimize for it
+
+# 5. W.R.T testing
+
+### 5.1 Avoid reuse of unit test object
+Do not hardcode unit tests (static) objects in the class and reuse them everywhere. It might look cleaner and nicer but it will bring maintainability issues down the line. If something is to be refactored and the connections between these are hardcoded (foreign key ids) it will be very hard to refactor away. Better to create new objects in the method's test itself (even if it's copy pasted). Tests shouldn't have dependencies to one another.
+
+
+    private val episodeOrder1 = Order(
+            UUID.randomUUID().toString(),
+            1,
+            "Magic",
+            "type",
+            campaignId1,
+            25,
+            UUID.randomUUID().toString(),
+            DateTime.now(),
+            "status",
+            null,
+            null,
+            null
+    )
+    private val episodeOrderTask1 = OrderTask(
+            episodeOrder1.id,
+            "type",
+            DateTime.now(),
+            DateTime.now(),
+            DateTime.now(),
+            DateTime.now(),
+            "status"
+    )
+
+    // if I have to refactor the id away for example, there will be a lot of code to change because I won't know the id of it until it executes at runtime
+
+
+### 5.2 Avoid chaos - avoid randomness
+If you are creating unit tests, AVOID using UUID.randomUUID()! Unit tests should be as reproducible as possible for obvious reasons. In this case, if we really don't care about the value of that UUID in particular, the best choice is to generate a UUID ahead of time (https://www.uuidgenerator.net/version4 or REPL)
+
+
+# 6. W.R.T kotlin specific advice
+
+### 6.1 Use dictionary-addressing when having 2/3+ parameters
+In Kotlin, one of the most powerful features is the dictionary-addressing for parameters when calling functions (f(a=1,b=2,..)). This is just delegating the burden to the compiler because it does the exact same at runtime - put stuff in the correct order in the stack for the calling function to use. When methods have a lot of parameters (eg: data classes), it is worth to use this addressing. That way, if something is changed in future regarding this function like parameter order or adition/removal of parameters, we won't have to change the whole thing. Besides being a lot more visible and avoiding human error because the parameter being binded is a lot more obvious to the developer reading the code.
+
+    private val Order1 = Order(
+            // UUID.randomUUID().toString(),
+            1,
+            "Magic",
+            "type",
+            campaignId1,
+            25,
+            UUID.randomUUID().toString(),
+            DateTime.now(),
+            "status",
+            null,
+            null,
+            null
+    )
+
+    // I removed/moved the "id" field, and now I to go to all places where this class is created and modify it as well. In some cases, this won't even be a compile-time error if all other fields types happen to match afterwards and the number of parameters might not raise an error if the last parameters had default values on them!
