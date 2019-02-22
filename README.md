@@ -120,3 +120,11 @@ In Kotlin, one of the most powerful features is the dictionary-addressing for pa
     )
 
     // I removed/moved the "id" field, and now I to go to all places where this class is created and modify it as well. In some cases, this won't even be a compile-time error if all other fields types happen to match afterwards and the number of parameters might not raise an error if the last parameters had default values on them!
+
+
+
+
+
+
+# TODO - left to develop/categorize
+- Always mistrust round or close to round numbers. If a query is now showing everything that you expect and has exactly or close to 500 elements (as example), i might be getting capped or limited somewhere.
